@@ -1,0 +1,5 @@
+[
+ {"id":"d1","name":"Sample Customer","role":"Founder, Example Studio (demo data)","text":"Kudoshelf took ten minutes to set up and our wall of love has been on our pricing page ever since.","rating":5,"tags":["agency"],"date":"2026-10-10","approved":true,"consent":true},
+ {"id":"d2","name":"Demo Reviewer","role":"Ops lead (demo data)","text":"We stopped paying monthly just to show quotes on our site. One file, one embed line.","rating":5,"tags":["saas"],"date":"2026-10-08","approved":true,"consent":true},
+ {"id":"d3","name":"Placeholder Person","role":"Freelancer (demo data)","text":"Clients send me a code, I paste it in the admin page, approve it, done.","rating":4,"tags":["freelance"],"date":"2026-10-05","approved":true,"consent":true}
+]
