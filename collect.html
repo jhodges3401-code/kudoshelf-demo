@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Leave a testimonial</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:560px;margin:auto;padding:24px}label{display:block;margin:12px 0 4px;font-weight:600}input,textarea,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{margin-top:16px;background:#6d28d9;color:#fff;border:0;padding:12px 18px;border-radius:8px;font-weight:700}.err{color:#b91c1c}#out{display:none;margin-top:20px}textarea[readonly]{font-family:monospace;font-size:12px}</style></head>
+<body><a href="./">← Wall</a><h1>Leave a testimonial</h1>
+<!-- Owner: set your email here --><script>var OWNER_EMAIL = 'you@example.com';</script>
+<form id="f"><label>Your name<input name="name" required maxlength="80"></label><label>Role / company<input name="role" maxlength="120"></label>
+<label>Rating<select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>
+<label>Your testimonial<textarea name="text" rows="5" required maxlength="1200"></textarea></label>
+<label>Photo URL (https, optional)<input name="avatar"></label><label>Your website (https, optional)<input name="link"></label>
+<label style="font-weight:400"><input type="checkbox" name="consent" style="width:auto"> I agree this testimonial and my name may be published.</label>
+<p class="err" id="err"></p><button>Create my testimonial</button></form>
+<div id="out"><p>Thanks! Send this code to the owner (the button opens your email app):</p><textarea id="code" rows="4" readonly></textarea><p><a id="mail" href="#">Email it</a></p></div>
+<script src="kudoshelf.js"></script><script>
+document.getElementById('f').onsubmit=function(e){e.preventDefault();var d=Object.fromEntries(new FormData(this));d.consent=!!d.consent;
+var errs=Kudoshelf.validate(d);document.getElementById('err').textContent=errs.join('; ');if(errs.length)return;
+var c=Kudoshelf.encodeSubmission(d);document.getElementById('code').value=c;document.getElementById('out').style.display='block';
+document.getElementById('mail').href='mailto:'+OWNER_EMAIL+'?subject='+encodeURIComponent('Testimonial from '+d.name)+'&body='+encodeURIComponent(c);};
+</script></body></html>

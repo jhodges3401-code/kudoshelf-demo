@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kudoshelf admin</title>
+<style>body{font:15px/1.5 system-ui,sans-serif;max-width:900px;margin:auto;padding:24px}textarea{width:100%;box-sizing:border-box;font-family:monospace;font-size:12px}
+button{background:#6d28d9;color:#fff;border:0;padding:8px 14px;border-radius:8px;margin:4px 4px 4px 0}.row{display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #eee;padding:8px 0}.row>div{flex:1}</style></head>
+<body><a href="./">← Wall</a><h1>Admin (runs in your browser only)</h1>
+<p>1. Load your current list. 2. Paste submission codes. 3. Approve. 4. Download <b>testimonials.json</b> and commit it to your repo.</p>
+<button id="load">Load testimonials.json</button>
+<h3>Paste submission codes (one or many)</h3><textarea id="codes" rows="4"></textarea><button id="add">Add to queue</button><p id="msg"></p>
+<div id="list"></div><button id="dl">Download testimonials.json</button>
+<script src="kudoshelf.js"></script><script>
+var items=[];function draw(){document.getElementById('list').innerHTML=items.map(function(t,i){return '<div class="row"><div>'+Kudoshelf.renderCard(t)+'</div><label><input type="checkbox" data-i="'+i+'" '+(t.approved?'checked':'')+'> approved</label><button data-del="'+i+'">Delete</button></div>'}).join('');}
+document.getElementById('list').onclick=function(e){var i=e.target.getAttribute('data-i'),d=e.target.getAttribute('data-del');if(i!==null)items[i].approved=e.target.checked;if(d!==null){items.splice(d,1);draw();}};
+document.getElementById('load').onclick=function(){fetch('testimonials.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(l){items=l.map(function(t){var n=Kudoshelf.normalize(t);n.approved=t.approved===true;n.consent=t.consent===true;return n});draw();});};
+document.getElementById('add').onclick=function(){var m=document.getElementById('codes').value.match(/KUDO1\.[A-Za-z0-9_-]+/g)||[],ok=0;m.forEach(function(c){try{items.push(Kudoshelf.decodeSubmission(c));ok++}catch(e){}});document.getElementById('msg').textContent='Added '+ok+' of '+m.length;draw();};
+document.getElementById('dl').onclick=function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(items,null,1)],{type:'application/json'}));a.download='testimonials.json';a.click();};
+</script></body></html>
